@@ -11,7 +11,7 @@
             <div class="product-card">
                 <div class="product-image">
                     @if($product->photo)
-                        <img src="{{ asset('products/' . basename($product->photo)) }}" alt="{{ $product->name }}"
+                        <img src="{{ asset('products/' . $product->photo) }}" alt="{{ $product->name }}"
                             onerror="this.src='https://via.placeholder.com/200'">
                     @else
                         <div class="placeholder-img">
@@ -366,20 +366,20 @@
                     let html = '';
                     items.forEach((item, index) => {
                         html += `
-                                            <div class="cart-item">
-                                                <div class="cart-item-info">
-                                                    <h4>${item.name}</h4>
-                                                    <div class="price-tag">Rp ${new Intl.NumberFormat('id-ID').format(item.price)} / unit</div>
-                                                    <div class="subtotal-tag">Subtotal: Rp ${new Intl.NumberFormat('id-ID').format(item.subtotal)}</div>
-                                                </div>
-                                                <div class="cart-item-qty">
-                                                    <button class="qty-btn" onclick="updateQty(${index}, ${item.quantity - 1})"><i class="fas fa-minus"></i></button>
-                                                    <input type="number" value="${item.quantity}" class="cart-qty-input" readonly>
-                                                    <button class="qty-btn" onclick="updateQty(${index}, ${item.quantity + 1})"><i class="fas fa-plus"></i></button>
-                                                    <button class="qty-btn" style="color:#ef4444; border-color:#fee2e2; margin-left:8px" onclick="removeItem(${index})"><i class="fas fa-trash"></i></button>
-                                                </div>
-                                            </div>
-                                        `;
+                                                    <div class="cart-item">
+                                                        <div class="cart-item-info">
+                                                            <h4>${item.name}</h4>
+                                                            <div class="price-tag">Rp ${new Intl.NumberFormat('id-ID').format(item.price)} / unit</div>
+                                                            <div class="subtotal-tag">Subtotal: Rp ${new Intl.NumberFormat('id-ID').format(item.subtotal)}</div>
+                                                        </div>
+                                                        <div class="cart-item-qty">
+                                                            <button class="qty-btn" onclick="updateQty(${index}, ${item.quantity - 1})"><i class="fas fa-minus"></i></button>
+                                                            <input type="number" value="${item.quantity}" class="cart-qty-input" readonly>
+                                                            <button class="qty-btn" onclick="updateQty(${index}, ${item.quantity + 1})"><i class="fas fa-plus"></i></button>
+                                                            <button class="qty-btn" style="color:#ef4444; border-color:#fee2e2; margin-left:8px" onclick="removeItem(${index})"><i class="fas fa-trash"></i></button>
+                                                        </div>
+                                                    </div>
+                                                `;
                     });
                     cartItemsContainer.innerHTML = html;
                     cartTotalAmount.textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(total);
