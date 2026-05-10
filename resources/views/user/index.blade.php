@@ -11,7 +11,7 @@
             <div class="product-card">
                 <div class="product-image">
                     @if($product->photo)
-                        <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}"
+                        <img src="{{ asset('products/' . basename($product->photo)) }}" alt="{{ $product->name }}"
                             onerror="this.src='https://via.placeholder.com/200'">
                     @else
                         <div class="placeholder-img">
