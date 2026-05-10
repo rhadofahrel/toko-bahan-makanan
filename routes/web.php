@@ -32,3 +32,15 @@ Route::prefix('admin')->middleware(['auth.custom', 'role:admin'])->group(functio
     Route::delete('/products/{id}', [AdminController::class, 'destroy'])->name('admin.products.destroy');
     Route::get('/products/all', [AdminController::class, 'getAll'])->name('admin.products.getAll');
 });
+
+use Illuminate\Support\Facades\Response;
+
+Route::get('/products/{filename}', function ($filename) {
+    $path = public_path('products/' . $filename);
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    return Response::file($path);
+});
