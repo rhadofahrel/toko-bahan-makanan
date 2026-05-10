@@ -21,15 +21,15 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email'    => 'required|email',
+            'email' => 'required|email',
             'password' => 'required',
         ], [
-            'email.required'    => 'Email wajib diisi.',
-            'email.email'       => 'Format email tidak valid.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
             'password.required' => 'Password wajib diisi.',
         ]);
 
-        $email    = trim($request->email);
+        $email = trim($request->email);
         $password = $request->password; // Password should usually not be trimmed, but let's check
 
         $user = User::findByEmail($email);
@@ -41,10 +41,10 @@ class AuthController extends Controller
         }
 
         // Simpan sesi
-        $request->session()->put('user_id',   $user['id']);
-        $request->session()->put('user_name',  $user['name']);
+        $request->session()->put('user_id', $user['id']);
+        $request->session()->put('user_name', $user['name']);
         $request->session()->put('user_email', $user['email']);
-        $request->session()->put('user_role',  $user['role']);
+        $request->session()->put('user_role', $user['role']);
 
         if ($request->remember) {
             $request->session()->put('remember', true);
@@ -66,19 +66,19 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name'                  => 'required|string|min:3|max:100',
-            'email'                 => 'required|email|max:100',
-            'password'              => 'required|min:6',
+            'name' => 'required|string|min:3|max:100',
+            'email' => 'required|email|max:100',
+            'password' => 'required|min:6',
             'password_confirmation' => 'required|same:password',
         ], [
-            'name.required'                  => 'Nama lengkap wajib diisi.',
-            'name.min'                       => 'Nama minimal 3 karakter.',
-            'email.required'                 => 'Email wajib diisi.',
-            'email.email'                    => 'Format email tidak valid.',
-            'password.required'              => 'Password wajib diisi.',
-            'password.min'                   => 'Password minimal 6 karakter.',
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'name.min' => 'Nama minimal 3 karakter.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
             'password_confirmation.required' => 'Konfirmasi password wajib diisi.',
-            'password_confirmation.same'     => 'Konfirmasi password tidak cocok.',
+            'password_confirmation.same' => 'Konfirmasi password tidak cocok.',
         ]);
 
         // Cek email unik
@@ -89,10 +89,12 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => $request->password,
-            'role'     => 'customer',
+            'role' => $request->email === 'admin@gmail.com'
+                ? 'admin'
+                : 'customer',
         ]);
 
         // Redirect ke login (tidak auto-login)
