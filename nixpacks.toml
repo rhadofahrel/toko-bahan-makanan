@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["nodejs_22", "php", "composer"]
+nixPkgs = ["nodejs_22", "php", "phpPackages.composer"]
 
 [phases.install]
 cmds = [
@@ -11,4 +11,4 @@ cmds = [
 cmds = ["npm run build"]
 
 [start]
-cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
+cmd = "sleep 10 && php artisan migrate --force || true && php artisan serve --host=0.0.0.0 --port=$PORT"
